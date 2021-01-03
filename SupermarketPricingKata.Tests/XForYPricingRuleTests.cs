@@ -32,16 +32,25 @@ namespace SupermarketPricingKata.Tests
 
             IPricingRule twoForOnePricingRule = new XForYPricingRule(twoForOneItem, 2, 1);
 
-            //var checkout = new Checkout(threeForTwoPricingRule);
-
-            var itemGrouping = new ItemGrouping(twoForOneItem, 3);
-
-            //checkout.Scan(threeForTwoItem);
-            //checkout.Scan(threeForTwoItem);
+            var itemGrouping = new ItemGrouping(twoForOneItem, 2);
 
             decimal actual = twoForOnePricingRule.CalculatePricing(itemGrouping);
 
-            //decimal actual = checkout.Total;
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void CalculatePricing_TwoForOneOnFourItems_CalculatesCorrectPrice()
+        {
+            decimal expected = 20.00M;
+
+            var twoForOneItem = new Item("2 for 1 Item", 10.00M);
+
+            IPricingRule twoForOnePricingRule = new XForYPricingRule(twoForOneItem, 2, 1);
+
+            var itemGrouping = new ItemGrouping(twoForOneItem, 4);
+
+            decimal actual = twoForOnePricingRule.CalculatePricing(itemGrouping);
 
             Assert.Equal(expected, actual);
         }
