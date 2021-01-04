@@ -7,6 +7,18 @@ namespace SupermarketPricingKata.Tests
     public class SupermarketPricingTests
     {
         [Fact]
+        public void Pricing_NoItemsScanned_Calculates0()
+        {
+            decimal expected = 0.00M;
+
+            var checkout = new Checkout();
+
+            decimal actual = checkout.CalculateTotal();
+
+            Assert.Equal(expected, actual);
+        }
+
+        [Fact]
         public void Pricing_SimpleItemPricing_CalculatesPrice()
         {
             decimal expected = 10.00M;

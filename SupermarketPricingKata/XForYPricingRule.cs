@@ -2,21 +2,21 @@
 {
     public class XForYPricingRule : IPricingRule
     {
+        protected readonly int thresholdQuantity;
+        protected readonly int specialQuantity;
+
         public XForYPricingRule(int thresholdQuantity, int specialQuantity)
         {
-            ThresholdQuantity = thresholdQuantity;
-            SpecialQuantity = specialQuantity;
+            this.thresholdQuantity = thresholdQuantity;
+            this.specialQuantity = specialQuantity;
         }
-
-        public int ThresholdQuantity { get; }
-        public int SpecialQuantity { get; }
 
         public decimal CalculatePrice(Item item, int quantity)
         {
-            int occurrencesOfSpecial = quantity / ThresholdQuantity;
-            int excludedItemsCount = quantity % ThresholdQuantity;
+            int occurrencesOfSpecial = quantity / thresholdQuantity;
+            int excludedItemsCount = quantity % thresholdQuantity;
 
-            int newItemCount = occurrencesOfSpecial * SpecialQuantity + excludedItemsCount;
+            int newItemCount = occurrencesOfSpecial * specialQuantity + excludedItemsCount;
 
             return item.UnitPrice * newItemCount;
         }

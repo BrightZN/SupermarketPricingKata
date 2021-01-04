@@ -2,7 +2,7 @@
 {
     public class DefaultPricingRule : IPricingRule
     {
-        public decimal CalculatePrice(Item item, int quantity)
+        public virtual decimal CalculatePrice(Item item, int quantity)
         {
             return item.UnitPrice * quantity;
         }

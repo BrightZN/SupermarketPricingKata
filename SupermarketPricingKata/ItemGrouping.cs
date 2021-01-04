@@ -4,7 +4,6 @@ namespace SupermarketPricingKata
 {
     public class ItemGrouping
     {
-
         public ItemGrouping(Item item, int quantity)
         {
             Item = item;
@@ -14,9 +13,6 @@ namespace SupermarketPricingKata
         public Item Item { get; }
         public int Quantity { get; }
 
-        public decimal CalculatePrice()
-        {
-            return Item.CalculatePrice(Quantity);
-        }
+        public decimal CalculatePrice() => Item.CalculatePrice(Quantity);
     }
 }
