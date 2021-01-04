@@ -2,25 +2,23 @@
 {
     public class XForYPricingRule : IPricingRule
     {
-        public XForYPricingRule(Item item, int itemCount, int specialItemCount)
+        public XForYPricingRule(int thresholdQuantity, int specialQuantity)
         {
-            Item = item;
-            ItemCount = itemCount;
-            SpecialItemCount = specialItemCount;
+            ThresholdQuantity = thresholdQuantity;
+            SpecialQuantity = specialQuantity;
         }
 
-        public int ItemCount { get; }
-        public Item Item { get; }
-        public int SpecialItemCount { get; }
+        public int ThresholdQuantity { get; }
+        public int SpecialQuantity { get; }
 
-        public decimal CalculatePricing(ItemGrouping itemGrouping)
+        public decimal CalculatePrice(Item item, int quantity)
         {
-            int occurrencesOfSpecial = itemGrouping.Count / ItemCount;
-            int excludedItemsCount = itemGrouping.Count % ItemCount;
+            int occurrencesOfSpecial = quantity / ThresholdQuantity;
+            int excludedItemsCount = quantity % ThresholdQuantity;
 
-            int newItemCount = occurrencesOfSpecial * SpecialItemCount + excludedItemsCount;
+            int newItemCount = occurrencesOfSpecial * SpecialQuantity + excludedItemsCount;
 
-            return itemGrouping.Item.UnitPrice * newItemCount; // SpecialItemCount
+            return item.UnitPrice * newItemCount;
         }
     }
 }

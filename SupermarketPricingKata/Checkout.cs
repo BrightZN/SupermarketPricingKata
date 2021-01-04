@@ -6,27 +6,31 @@ namespace SupermarketPricingKata
 {
     public class Checkout
     {
-        private readonly List<Item> _items = new List<Item>();
-        private readonly IEnumerable<IPricingRule> _pricingRules;
+        private readonly IEnumerable<Item> _items = new List<Item>();
 
-        public Checkout()
-        {
-            _pricingRules = Enumerable.Empty<IPricingRule>();
-        }
+        private readonly List<Sku> _skus = new List<Sku>();
 
-        public Checkout(params IPricingRule[] pricingRules)
+        public Checkout(params Item[] items)
         {
-            _pricingRules = pricingRules;
+            _items = items;
         }
 
         public decimal CalculateTotal()
         {
-            return _items.Sum(item => item.UnitPrice);
+            return _skus.GroupBy(sku => sku)
+                .Select(g => CreateItemGrouping(g.Key, g.Count()))
+                .Sum(g => g.CalculatePrice());
         }
 
-        public void Scan(Item item)
+        private ItemGrouping CreateItemGrouping(Sku sku, int quantity)
         {
-            _items.Add(item);
+            var item = GetItemBySku(sku);
+
+            return new ItemGrouping(item, quantity);
         }
+
+        private Item GetItemBySku(Sku sku) => _items.Single(i => i.Sku == sku);
+
+        public void Scan(Sku sku) => _skus.Add(sku);
     }
 }

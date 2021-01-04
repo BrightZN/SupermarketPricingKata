@@ -1,14 +1,23 @@
-﻿namespace SupermarketPricingKata
+﻿using System;
+
+namespace SupermarketPricingKata
 {
     public class Item
     {
-        public Item(string name, decimal unitPrice)
+        public Item(Sku sku, decimal unitPrice, IPricingRule pricingRule)
         {
-            Name = name;
+            Sku = sku;
             UnitPrice = unitPrice;
+            PricingRule = pricingRule;
         }
 
-        public string Name { get; }
+        public Sku Sku { get; }
         public decimal UnitPrice { get; }
+        public IPricingRule PricingRule { get; }
+
+        public decimal CalculatePrice(int quantity)
+        {
+            return PricingRule.CalculatePrice(this, quantity);
+        }
     }
 }

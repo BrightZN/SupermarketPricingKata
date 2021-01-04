@@ -11,63 +11,60 @@ namespace SupermarketPricingKata.Tests
         {
             decimal expected = 10.00M;
 
-            var item = new Item("Item 1", 5.00M);
+            var sku = new Sku("Item 1");
 
-            var checkout = new Checkout();
+            var item = new Item(sku, 5.00M, new DefaultPricingRule());
 
-            checkout.Scan(item);
-            checkout.Scan(item);
+            var checkout = new Checkout(item);
+
+            checkout.Scan(sku);
+            checkout.Scan(sku);
 
             decimal actual = checkout.CalculateTotal();
 
             Assert.Equal(expected, actual);
         }
 
-        //[Fact]
-        //public void Pricing_ThreeForTwo_CalculatesCorrectPrice()
-        //{
-        //    decimal expected = 20.00M;
+        [Fact]
+        public void Pricing_ThreeForTwo_CalculatesCorrectPrice()
+        {
+            decimal expected = 20.00M;
 
-        //    var threeForTwoItem = new Item("3 for 2 Item", 10.00M);
+            var sku = new Sku("3 for 2 Item");
 
-        //    IPricingRule threeForTwoPricingRule = new XForYPricingRule(threeForTwoItem, 3, 2);
+            var threeForTwoPricingRule = new XForYPricingRule(3, 2);
 
-        //    //var checkout = new Checkout(threeForTwoPricingRule);
+            var threeForTwoItem = new Item(sku, 10.00M, threeForTwoPricingRule);
 
-        //    var itemGrouping = new ItemGrouping(threeForTwoItem, 3);
+            var checkout = new Checkout(threeForTwoItem);
 
-        //    //checkout.Scan(threeForTwoItem);
-        //    //checkout.Scan(threeForTwoItem);
-        //    //checkout.Scan(threeForTwoItem);
+            checkout.Scan(sku);
+            checkout.Scan(sku);
+            checkout.Scan(sku);
 
-        //    decimal actual = threeForTwoPricingRule.CalculatePricing(itemGrouping);
+            decimal actual = checkout.CalculateTotal();
 
-        //    //decimal actual = checkout.Total;
+            Assert.Equal(expected, actual);
+        }
 
-        //    Assert.Equal(expected, actual);
-        //}
+        [Fact]
+        public void Pricing_TwoForOne_CalculatesCorrectPrice()
+        {
+            decimal expected = 10.00M;
 
-        //[Fact]
-        //public void Pricing_TwoForOne_CalculatesCorrectPrice()
-        //{
-        //    decimal expected = 10.00M;
+            var sku = new Sku("2 for 1 Item");
 
-        //    var twoForOneItem = new Item("2 for 1 Item", 10.00M);
+            var twoForOnePricingRule = new XForYPricingRule(2, 1);
+            var twoForOneItem = new Item(sku, 10.00M, twoForOnePricingRule);
 
-        //    IPricingRule twoForOnePricingRule = new XForYPricingRule(twoForOneItem, 2, 1);
+            var checkout = new Checkout(twoForOneItem);
 
-        //    //var checkout = new Checkout(threeForTwoPricingRule);
+            checkout.Scan(sku);
+            checkout.Scan(sku);
 
-        //    var itemGrouping = new ItemGrouping(twoForOneItem, 3);
+            decimal actual = checkout.CalculateTotal();
 
-        //    //checkout.Scan(threeForTwoItem);
-        //    //checkout.Scan(threeForTwoItem);
-
-        //    decimal actual = twoForOnePricingRule.CalculatePricing(itemGrouping);
-
-        //    //decimal actual = checkout.Total;
-
-        //    Assert.Equal(expected, actual);
-        //}
+            Assert.Equal(expected, actual);
+        }
     }
 }

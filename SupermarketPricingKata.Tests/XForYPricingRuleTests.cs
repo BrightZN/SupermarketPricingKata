@@ -1,56 +1,53 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
+﻿using Xunit;
 
 namespace SupermarketPricingKata.Tests
 {
     public class XForYPricingRuleTests
     {
         [Fact]
-        public void CalculatePricing_ThreeForTwo_CalculatesCorrectPrice()
+        public void CalculatePrice_ThreeForTwo_CalculatesCorrectPrice()
         {
             decimal expected = 20.00M;
 
-            var threeForTwoItem = new Item("3 for 2 Item", 10.00M);
+            var sku = new Sku("3 for 2 Item");
 
-            var threeForTwoPricingRule = new XForYPricingRule(threeForTwoItem, 3, 2);
+            var threeForTwoPricingRule = new XForYPricingRule(3, 2);
 
-            var itemGrouping = new ItemGrouping(threeForTwoItem, 3);
+            var threeForTwoItem = new Item(sku, 10.00M, threeForTwoPricingRule);
 
-            decimal actual = threeForTwoPricingRule.CalculatePricing(itemGrouping);
+            decimal actual = threeForTwoItem.CalculatePrice(3);
 
             Assert.Equal(expected, actual);
         }
 
         [Fact]
-        public void CalculatePricing_TwoForOne_CalculatesCorrectPrice()
+        public void CalculatePrice_TwoForOne_CalculatesCorrectPrice()
         {
             decimal expected = 10.00M;
 
-            var twoForOneItem = new Item("2 for 1 Item", 10.00M);
+            var sku = new Sku("2 for 1 Item");
 
-            IPricingRule twoForOnePricingRule = new XForYPricingRule(twoForOneItem, 2, 1);
+            IPricingRule twoForOnePricingRule = new XForYPricingRule(2, 1);
 
-            var itemGrouping = new ItemGrouping(twoForOneItem, 2);
+            var twoForOneItem = new Item(sku, 10.00M, twoForOnePricingRule);
 
-            decimal actual = twoForOnePricingRule.CalculatePricing(itemGrouping);
+            decimal actual = twoForOneItem.CalculatePrice(2);
 
             Assert.Equal(expected, actual);
         }
 
         [Fact]
-        public void CalculatePricing_TwoForOneOnFourItems_CalculatesCorrectPrice()
+        public void CalculatePrice_TwoForOneOnFourItems_CalculatesCorrectPrice()
         {
             decimal expected = 20.00M;
 
-            var twoForOneItem = new Item("2 for 1 Item", 10.00M);
+            var sku = new Sku("2 for 1 Item");
 
-            IPricingRule twoForOnePricingRule = new XForYPricingRule(twoForOneItem, 2, 1);
+            IPricingRule twoForOnePricingRule = new XForYPricingRule(2, 1);
 
-            var itemGrouping = new ItemGrouping(twoForOneItem, 4);
+            var twoForOneItem = new Item(sku, 10.00M, twoForOnePricingRule);
 
-            decimal actual = twoForOnePricingRule.CalculatePricing(itemGrouping);
+            decimal actual = twoForOneItem.CalculatePrice(4);
 
             Assert.Equal(expected, actual);
         }

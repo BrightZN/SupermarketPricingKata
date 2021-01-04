@@ -2,6 +2,6 @@
 {
     public interface IPricingRule
     {
-        decimal CalculatePricing(ItemGrouping itemGrouping);
+        decimal CalculatePrice(Item item, int quantity);
     }
 }

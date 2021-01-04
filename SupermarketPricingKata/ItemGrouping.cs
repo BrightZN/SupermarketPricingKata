@@ -1,15 +1,22 @@
-﻿namespace SupermarketPricingKata
+﻿using System;
+
+namespace SupermarketPricingKata
 {
     public class ItemGrouping
     {
 
-        public ItemGrouping(Item item, int count)
+        public ItemGrouping(Item item, int quantity)
         {
             Item = item;
-            Count = count;
+            Quantity = quantity;
         }
 
         public Item Item { get; }
-        public int Count { get; }
+        public int Quantity { get; }
+
+        public decimal CalculatePrice()
+        {
+            return Item.CalculatePrice(Quantity);
+        }
     }
 }
